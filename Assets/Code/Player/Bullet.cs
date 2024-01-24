@@ -1,4 +1,6 @@
-﻿using AudioWaves;
+﻿using System;
+using AudioWaves;
+using Misc;
 using UnityEngine;
 
 namespace Player
@@ -15,7 +17,7 @@ namespace Player
         private ScriptableAudioWaveAnimation _onHitAudioWaveAnimation;
 
         [SerializeField]
-        private GameObject _onHitEffectPrefab;
+        private AudioClip _impactAudioClip;
 
         [SerializeField]
         private int _maxBounces = 3;
@@ -28,6 +30,11 @@ namespace Player
         private Vector3 _direction;
         private int _bounce;
         private float _autoDestroyTime;
+
+        private void OnDisable()
+        {
+            _ready = false;
+        }
 
         // direction must be normalized!
         public void Setup(Vector3 direction)
@@ -47,7 +54,7 @@ namespace Player
             
             if (Time.time >= _autoDestroyTime)
             {
-                Destroy(gameObject);
+                ComponentPool<Bullet>.Release(this);
                 return;
             }
             
@@ -60,11 +67,13 @@ namespace Player
                 targetPosition = hit.point;
                 AudioWavesManager.Instance.Spawn(_onHitAudioWaveAnimation, targetPosition);
 
-                Instantiate(_onHitEffectPrefab, hit.point, Quaternion.identity);
+                SFXAudioSource sfxAudioSource = ComponentPool<SFXAudioSource>.Get();
+                sfxAudioSource.transform.position = hit.point;
+                sfxAudioSource.PlayAndReleaseSelf(_impactAudioClip);
 
                 if (_bounce >= _maxBounces)
                 {
-                    Destroy(gameObject);
+                    ComponentPool<Bullet>.Release(this);
                     return;
                 }
 

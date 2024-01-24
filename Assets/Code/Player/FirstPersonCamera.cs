@@ -2,6 +2,7 @@
 
 namespace Player
 {
+    // NOTE: also controls root object yaw axis
     public class FirstPersonCamera : MonoBehaviour
     {
         [SerializeField]
@@ -21,7 +22,8 @@ namespace Player
 
         private void LateUpdate()
         {
-            transform.rotation = Quaternion.Euler(Pitch, Yaw, 0f);
+            Camera.transform.localRotation = Quaternion.Euler(Pitch, 0f, 0f);
+            transform.rotation = Quaternion.Euler(0f, Yaw, 0f);
         }
 
         public void Rotate(float x, float y)

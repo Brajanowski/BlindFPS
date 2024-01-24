@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4247257294801038705
+--- !u!1 &6015450702428475910
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5783838131897670130}
-  - component: {fileID: 4183698859906871079}
+  - component: {fileID: 1345320943409119696}
+  - component: {fileID: 2800719720373227200}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: AudioWavesPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5783838131897670130
+--- !u!4 &1345320943409119696
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4247257294801038705}
+  m_GameObject: {fileID: 6015450702428475910}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,24 +32,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4183698859906871079
+--- !u!114 &2800719720373227200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4247257294801038705}
+  m_GameObject: {fileID: 6015450702428475910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c7567f820f345688e2332285ba0a5bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 28b2ace1701949f0af770692d6a95503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _travelSpeed: 50
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _onHitAudioWaveAnimation: {fileID: 11400000, guid: 2f8150c2d88b5ce4d9ad57a83240aa4d,
-    type: 2}
-  _impactAudioClip: {fileID: 8300000, guid: 79cd36afa49551347beb2771bbf0bf20, type: 3}
-  _maxBounces: 1
-  _autoDestroyDelay: 5
+  _prefab: {fileID: 3712019024539879330, guid: 593585a0a0e4bd54dbc9f609e114bb6a, type: 3}
+  _initialCapacity: 20

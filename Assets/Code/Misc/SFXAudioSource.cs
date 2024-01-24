@@ -3,16 +3,15 @@ using UnityEngine;
 
 namespace Misc
 {
-    // TODO: this should be removed in future and replaced with pooling
-    public class SFXAutoDestroy : MonoBehaviour
+    public class SFXAudioSource : MonoBehaviour
     {
         [SerializeField]
         private AudioSource _audioSource;
 
-        private void OnEnable()
+        public void PlayAndReleaseSelf(AudioClip clip)
         {
+            _audioSource.clip = clip;
             _audioSource.Play();
-
             StartCoroutine(Co_DestroyAfterFinishedPlaying());
         }
 

@@ -1,4 +1,5 @@
 ﻿using AudioWaves;
+using Misc;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,9 +11,6 @@ namespace Player
 
         [SerializeField]
         private Animator _animator;
-
-        [SerializeField]
-        private Bullet _bulletPrefab;
 
         [SerializeField]
         private AudioWaveShooter _audioWaveShooter;
@@ -36,8 +34,11 @@ namespace Player
             _nextShootTime = Time.time + 1.0f / _shootRate;
             
             _animator.SetTrigger(FireHash);
-            
-            Instantiate(_bulletPrefab, origin, Quaternion.identity).Setup(direction);
+
+            Bullet bullet = ComponentPool<Bullet>.Get();
+            bullet.transform.position = origin;
+            bullet.Setup(direction);
+
             _audioWaveShooter.Shoot(origin, direction);
             _waiting = true;
 
