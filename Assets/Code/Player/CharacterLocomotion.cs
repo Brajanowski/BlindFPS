@@ -130,6 +130,11 @@ namespace Player
 
         private void ApplyFriction()
         {
+            if (!IsGrounded)
+            {
+                return;
+            }
+
             Vector3 movementVelocity = _currentVelocity;
             movementVelocity.y = 0.0f;
 

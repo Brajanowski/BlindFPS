@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Pause;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
@@ -37,6 +38,10 @@ namespace Player
             _gameControls.FPP.Sprint.started += OnSprintStart;
             _gameControls.FPP.Sprint.canceled += OnSprintStop;
             _gameControls.FPP.Fire.performed += OnFire;
+            _gameControls.FPP.Pause.performed += OnPause;
+            
+            PauseMenu.Instance.OnShow.AddListener(OnPauseMenuShow);
+            PauseMenu.Instance.OnHide.AddListener(OnPauseMenuHide);
             
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -48,9 +53,18 @@ namespace Player
             _gameControls.FPP.Jump.performed -= OnJump;
             _gameControls.FPP.Scan.performed -= OnScan;
             _gameControls.FPP.Fire.performed -= OnFire;
+            _gameControls.FPP.Pause.performed -= OnPause;
+            
+            PauseMenu.Instance.OnShow.RemoveListener(OnPauseMenuShow);
+            PauseMenu.Instance.OnHide.RemoveListener(OnPauseMenuHide);
             
             _gameControls.Disable();
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        private void OnPause(InputAction.CallbackContext ctx)
+        {
+            PauseMenu.Instance.Toggle();
         }
 
         private void MoveRight(float input)
@@ -67,23 +81,6 @@ namespace Player
 
         private void Update()
         {
-#if UNITY_EDITOR
-            if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(KeyCode.Escape))
-            {
-                Cursor.lockState = CursorLockMode.None;
-                return;
-            }
-
-            if (Cursor.lockState == CursorLockMode.None)
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Cursor.lockState = CursorLockMode.Locked;
-                }
-                return;
-            }
-#endif
-
             Vector2 move = _gameControls.FPP.Move.ReadValue<Vector2>();
             MoveRight(move.x);
             MoveForward(move.y);
@@ -121,6 +118,18 @@ namespace Player
         private void OnFire(InputAction.CallbackContext ctx)
         {
             _gun.Shoot(_firstPersonCamera.transform.position, _firstPersonCamera.Camera.transform.forward);
+        }
+        
+        private void OnPauseMenuShow()
+        {
+            _gameControls.Disable();
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        private void OnPauseMenuHide()
+        {
+            _gameControls.Enable();
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using Core;
 using Rendering;
 using UnityEngine;
 
 namespace AudioWaves
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = BlindFPSConstants.AssetCreationMenu + "Wave Animation/Expand And Fadeout")]
     public class ExpandAndFadoutWaveAnimation : ScriptableAudioWaveAnimation
     {
         [SerializeField]

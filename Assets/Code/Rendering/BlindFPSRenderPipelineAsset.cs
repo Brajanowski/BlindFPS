@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Rendering
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = BlindFPSConstants.AssetCreationMenu + "/Rendering/Render Pipeline Asset")]
     public class BlindFPSRenderPipelineAsset : RenderPipelineAsset
     {
         [field: SerializeField]

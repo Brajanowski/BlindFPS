@@ -34,7 +34,7 @@ namespace Misc
 
         private T CreateObject()
         {
-            T res = Instantiate(_prefab);
+            T res = Instantiate(_prefab, transform);
             res.gameObject.SetActive(false);
             return res;
         }
@@ -52,6 +52,7 @@ namespace Misc
         private void OnReleaseToPool(T obj)
         {
             obj.gameObject.SetActive(false);
+            obj.transform.SetParent(transform);
         }
     }
 }

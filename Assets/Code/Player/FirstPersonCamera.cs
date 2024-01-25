@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Misc;
+using UnityEngine;
 
 namespace Player
 {
@@ -6,7 +7,7 @@ namespace Player
     public class FirstPersonCamera : MonoBehaviour
     {
         [SerializeField]
-        private float _sensitivity = 2f;
+        private ScriptableValue<float> _sensitivity;
 
         [SerializeField]
         private float _pitchMin = -80f;
@@ -28,7 +29,7 @@ namespace Player
 
         public void Rotate(float x, float y)
         {
-            float sens = _sensitivity;
+            float sens = _sensitivity.Value;
 
             Pitch -= y * sens;
             Pitch = Mathf.Clamp(Pitch, _pitchMin, _pitchMax);

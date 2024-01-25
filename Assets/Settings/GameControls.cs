@@ -89,6 +89,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e8242c5-9f0d-4914-b257-4efedd9415e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -223,6 +232,17 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc8344e7-943e-4fb3-aa1e-8ea14a65626a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -238,6 +258,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_FPP_Scan = m_FPP.FindAction("Scan", throwIfNotFound: true);
         m_FPP_Jump = m_FPP.FindAction("Jump", throwIfNotFound: true);
         m_FPP_Sprint = m_FPP.FindAction("Sprint", throwIfNotFound: true);
+        m_FPP_Pause = m_FPP.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +327,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_FPP_Scan;
     private readonly InputAction m_FPP_Jump;
     private readonly InputAction m_FPP_Sprint;
+    private readonly InputAction m_FPP_Pause;
     public struct FPPActions
     {
         private @GameControls m_Wrapper;
@@ -317,6 +339,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         public InputAction @Scan => m_Wrapper.m_FPP_Scan;
         public InputAction @Jump => m_Wrapper.m_FPP_Jump;
         public InputAction @Sprint => m_Wrapper.m_FPP_Sprint;
+        public InputAction @Pause => m_Wrapper.m_FPP_Pause;
         public InputActionMap Get() { return m_Wrapper.m_FPP; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -347,6 +370,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IFPPActions instance)
@@ -372,6 +398,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IFPPActions instance)
@@ -398,5 +427,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         void OnScan(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using Core;
 using Rendering;
 using UnityEngine;
 
 namespace AudioWaves
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = BlindFPSConstants.AssetCreationMenu + "Wave Animation/Constant")]
     public class ConstantAudioWaveAnimation : ScriptableAudioWaveAnimation
     {
         [SerializeField]

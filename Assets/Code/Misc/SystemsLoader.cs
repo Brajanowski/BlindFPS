@@ -4,7 +4,7 @@ namespace Misc
 {
     public class SystemsLoader : MonoBehaviour
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Load()
         {
             SystemsLoader systemsLoader = Resources.Load<SystemsLoader>("SystemsLoader");
