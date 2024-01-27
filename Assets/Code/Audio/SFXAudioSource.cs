@@ -1,7 +1,8 @@
 ﻿using System.Collections;
+using Core;
 using UnityEngine;
 
-namespace Misc
+namespace Audio
 {
     public class SFXAudioSource : MonoBehaviour
     {
@@ -18,7 +19,7 @@ namespace Misc
         private IEnumerator Co_DestroyAfterFinishedPlaying()
         {
             yield return new WaitWhile(() => _audioSource.isPlaying);
-            Destroy(gameObject);
+            ComponentPool<SFXAudioSource>.Release(this);
         }
     }
 }

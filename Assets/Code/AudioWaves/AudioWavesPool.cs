@@ -1,6 +1,7 @@
-﻿using Rendering;
+﻿using Core;
+using Rendering;
 
-namespace Misc
+namespace AudioWaves
 {
     public class AudioWavesPool : ComponentPool<AudioWave>
     {

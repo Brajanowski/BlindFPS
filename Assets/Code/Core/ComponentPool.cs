@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Misc
+namespace Core
 {
     public class ComponentPool<T> : MonoBehaviour where T : MonoBehaviour
     {

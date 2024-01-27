@@ -1,6 +1,6 @@
-﻿using Player;
+﻿using Core;
 
-namespace Misc
+namespace Player
 {
     public class BulletsPool : ComponentPool<Bullet>
     {

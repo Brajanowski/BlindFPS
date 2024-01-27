@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Audio;
 using AudioWaves;
-using Misc;
+using Core;
 using UnityEngine;
 
 namespace Player

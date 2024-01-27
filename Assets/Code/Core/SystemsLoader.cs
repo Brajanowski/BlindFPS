@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Misc
+namespace Core
 {
     public class SystemsLoader : MonoBehaviour
     {

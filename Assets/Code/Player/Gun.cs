@@ -1,5 +1,5 @@
 ﻿using AudioWaves;
-using Misc;
+using Core;
 using UnityEngine;
 using UnityEngine.Events;
 

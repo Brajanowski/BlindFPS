@@ -1,7 +1,6 @@
-﻿using Core;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Misc
+namespace Core
 {
     [CreateAssetMenu(menuName = BlindFPSConstants.AssetCreationMenu + "Float Value")]
     public class ScriptableFloatValue : ScriptableValue<float>
