@@ -62,6 +62,8 @@ namespace Player
             Cursor.lockState = CursorLockMode.None;
         }
 
+        public FirstPersonCamera GetCameraController() => _firstPersonCamera;
+
         private void OnPause(InputAction.CallbackContext ctx)
         {
             PauseMenu.Instance.Toggle();

@@ -1,7 +1,6 @@
 ﻿using Core;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 namespace Pause
 {
@@ -54,7 +53,7 @@ namespace Pause
         public void QuitToMenu()
         {
             Hide();
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            Game.Instance.GoToMainMenu();
         }
     }
 }

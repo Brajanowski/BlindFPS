@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using Core;
+using UnityEngine;
 
 namespace MainMenu
 {
@@ -7,7 +7,7 @@ namespace MainMenu
     {
         public void Play()
         {
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            Game.Instance.StartLevel(0);
         }
 
         public void Quit()

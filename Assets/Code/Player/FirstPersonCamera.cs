@@ -14,7 +14,7 @@ namespace Player
 
         [SerializeField]
         private float _pitchMax = 80f;
-        
+
         [field: SerializeField]
         public Camera Camera { get; private set; }
 
@@ -39,9 +39,8 @@ namespace Player
 
         public void SetLookDirection(Vector3 forward)
         {
-            Vector3 euler = Quaternion.LookRotation(forward, Vector3.up).eulerAngles;
-            Pitch = euler.x;
-            Yaw = euler.y;
+            Pitch = Mathf.Asin(-forward.y) * Mathf.Rad2Deg;
+            Yaw = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
         }
     }
 }

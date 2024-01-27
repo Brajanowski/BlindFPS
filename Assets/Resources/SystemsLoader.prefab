@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabsToSpawn:
+  - {fileID: 4159893841741588599, guid: 96959f3b9a260d94ab93ac5ada4f7b0b, type: 3}
   - {fileID: 6015450702428475910, guid: 2ade426306040084098905046ddff4a4, type: 3}
   - {fileID: 8566254261513289941, guid: 37eb2eb2c64980c4c83ac91a34fb0ccd, type: 3}
   - {fileID: 5167112378789994582, guid: 8e0a1046ceb5adb41bedd7f1a934f0fa, type: 3}
