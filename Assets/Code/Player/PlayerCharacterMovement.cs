@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
+using Utils;
 
 namespace Player
 {
-    public class CharacterLocomotion : MonoBehaviour
+    public class PlayerCharacterMovement : MonoBehaviour
     {
         [SerializeField]
         private CharacterController _characterController;
@@ -26,8 +28,19 @@ namespace Player
         [SerializeField]
         private float _damping = 40.0f;
 
-        private Vector3 _pendingInputValue;
+        [SerializeField]
+        private FootstepEmitter[] _footstepEmitters;
 
+        [SerializeField]
+        private Vector2 _foostepEmitSlowFastRate = new Vector2(1.0f, 0.2f);
+
+        [SerializeField]
+        private Vector2 _footstepEmitSpeedSlowFastThresholds = new Vector2(3.0f, 10.0f);
+
+        private float _emitFootstepTimer;
+        private int _footstepEmitterIndex;
+
+        private Vector3 _pendingInputValue;
         private Vector3 _currentVelocity;
 
         private bool _isSprinting;
@@ -41,6 +54,11 @@ namespace Player
         public UnityEvent OnJumpStarted = new();
         public UnityEvent OnLanded = new();
 
+        private void Awake()
+        {
+            Debug.Log("TA: " + MathfUtils.Remap(5, 0, 10, 0, 1));
+        }
+
         private void Update()
         {
             ConsumePendingInput();
@@ -48,8 +66,48 @@ namespace Player
 
             _characterController.Move(_currentVelocity * Time.deltaTime);
 
+            HandleFootsteps();
+
             ApplyFriction();
             DetectFall();
+        }
+
+        private void HandleFootsteps()
+        {
+            if (!IsGrounded)
+            {
+                _emitFootstepTimer = 1.0f;
+                return;
+            }
+            
+            Vector3 vel = _currentVelocity;
+            vel.y = 0.0f;
+
+            float speed = vel.magnitude;
+            
+            float t = Mathf.Clamp01(MathfUtils.Remap(speed, _footstepEmitSpeedSlowFastThresholds.x, _footstepEmitSpeedSlowFastThresholds.y, 0.0f, 1.0f));
+            float rate = Mathf.Lerp(_foostepEmitSlowFastRate.x, _foostepEmitSlowFastRate.y, t);
+
+            _emitFootstepTimer -= Time.deltaTime * rate;
+            if (_emitFootstepTimer > 0.0f)
+            {
+                return;
+            }
+
+            _emitFootstepTimer = 1.0f;
+
+            if (speed < _footstepEmitSpeedSlowFastThresholds.x)
+            {
+                return;
+            }
+
+            _footstepEmitterIndex++;
+            if (_footstepEmitterIndex > _footstepEmitters.Length - 1)
+            {
+                _footstepEmitterIndex = 0;
+            }
+
+            _footstepEmitters[_footstepEmitterIndex].Emit();
         }
 
         private void DetectFall()
@@ -76,7 +134,7 @@ namespace Player
                 _pendingInputValue = Vector3.zero;
                 return;
             }
-            
+
             _pendingInputValue.y = 0.0f;
 
             float pendingInputMagnitude = _pendingInputValue.magnitude;

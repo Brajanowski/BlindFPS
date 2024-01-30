@@ -2,13 +2,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
-        private CharacterLocomotion _characterLocomotion;
+        private PlayerCharacterMovement _playerCharacterMovement;
 
         [SerializeField]
         private FirstPersonCamera _firstPersonCamera;
@@ -75,13 +76,13 @@ namespace Player
         private void MoveRight(float input)
         {
             Vector3 direction = Quaternion.AngleAxis(_firstPersonCamera.Yaw, Vector3.up) * Vector3.right;
-            _characterLocomotion.AddMovementInput(direction, input);
+            _playerCharacterMovement.AddMovementInput(direction, input);
         }
 
         private void MoveForward(float input)
         {
             Vector3 direction = Quaternion.AngleAxis(_firstPersonCamera.Yaw, Vector3.up) * Vector3.forward;
-            _characterLocomotion.AddMovementInput(direction, input);
+            _playerCharacterMovement.AddMovementInput(direction, input);
         }
 
         private void Update()
@@ -107,17 +108,17 @@ namespace Player
 
         private void OnSprintStart(InputAction.CallbackContext ctx)
         {
-            _characterLocomotion.StartSprint();
+            _playerCharacterMovement.StartSprint();
         }
 
         private void OnSprintStop(InputAction.CallbackContext ctx)
         {
-            _characterLocomotion.StopSprint();
+            _playerCharacterMovement.StopSprint();
         }
         
         private void OnJump(InputAction.CallbackContext ctx)
         {
-            _characterLocomotion.Jump();
+            _playerCharacterMovement.Jump();
         }
         
         private void OnFire(InputAction.CallbackContext ctx)
@@ -125,7 +126,7 @@ namespace Player
             Vector3 shootDir = _firstPersonCamera.Camera.transform.forward;
             if (_gun.Shoot(_firstPersonCamera.transform.position, shootDir))
             {
-                _characterLocomotion.AddVelocity(shootDir * -_gunKnockback);
+                _playerCharacterMovement.AddVelocity(shootDir * -_gunKnockback);
             }
         }
         

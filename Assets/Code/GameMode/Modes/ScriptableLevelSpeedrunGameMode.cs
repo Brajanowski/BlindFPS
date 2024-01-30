@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Core;
+using Pause;
 using Player;
 using UnityEngine;
 
@@ -29,6 +30,9 @@ namespace GameMode.Modes
 
             SpawnPlayer();
             SpawnHUD();
+
+            PauseMenu.Instance.OnShow.AddListener(OnPauseMenuShown);
+            PauseMenu.Instance.OnHide.AddListener(OnPauseMenuHidden);
         }
 
         public override IEnumerator OnExit()
@@ -64,6 +68,16 @@ namespace GameMode.Modes
         private void SpawnHUD()
         {
             _playerHUD = Instantiate(_playerHUDPrefab);
+        }
+
+        private void OnPauseMenuShown()
+        {
+            _playerHUD.gameObject.SetActive(false);
+        }
+
+        private void OnPauseMenuHidden()
+        {
+            _playerHUD.gameObject.SetActive(true);
         }
     }
 }
