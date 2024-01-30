@@ -982,7 +982,7 @@ MonoBehaviour:
   _footstepEmitters:
   - {fileID: 8754572245918927921}
   - {fileID: 933791605350093000}
-  _foostepEmitSlowFastRate: {x: 1, y: 4}
+  _foostepEmitSlowFastRate: {x: 1, y: 3}
   _footstepEmitSpeedSlowFastThresholds: {x: 4, y: 10}
   OnJumpStarted:
     m_PersistentCalls:

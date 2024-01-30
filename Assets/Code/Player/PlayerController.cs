@@ -1,8 +1,8 @@
-﻿using Pause;
+﻿using System;
+using Pause;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -28,6 +28,9 @@ namespace Player
         private float _nextScanTime;
 
         public UnityEvent OnEnvironmentScan = new();
+
+        public UnityEvent OnLevelCompletionTriggerEnter = new();
+        public UnityEvent OnDeath = new();
 
         private void Awake()
         {
@@ -64,6 +67,16 @@ namespace Player
             
             _gameControls.Disable();
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Finish"))
+            {
+                Cursor.lockState = CursorLockMode.None;
+                _gameControls.Disable();
+                OnLevelCompletionTriggerEnter?.Invoke();
+            }
         }
 
         public FirstPersonCamera GetCameraController() => _firstPersonCamera;

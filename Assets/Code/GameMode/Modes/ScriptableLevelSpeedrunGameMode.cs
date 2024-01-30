@@ -2,6 +2,7 @@
 using Core;
 using Pause;
 using Player;
+using UI;
 using UnityEngine;
 
 namespace GameMode.Modes
@@ -23,6 +24,9 @@ namespace GameMode.Modes
         private PlayerController _playerController;
         private PlayerHUD _playerHUD;
 
+        private bool _freezeTimer = false;
+        private float _levelTimer = 0.0f;
+
         public override IEnumerator OnEnter()
         {
             _gameState = Game.Instance.State;
@@ -33,10 +37,19 @@ namespace GameMode.Modes
 
             PauseMenu.Instance.OnShow.AddListener(OnPauseMenuShown);
             PauseMenu.Instance.OnHide.AddListener(OnPauseMenuHidden);
+
+            _freezeTimer = false;
+            _levelTimer = 0.0f;
+
+            _playerController.OnLevelCompletionTriggerEnter.AddListener(OnReachedLevelCompletion);
+            _playerController.OnDeath.AddListener(OnPlayerDied);
         }
 
         public override IEnumerator OnExit()
         {
+            _playerController.OnLevelCompletionTriggerEnter.RemoveListener(OnReachedLevelCompletion);
+            _playerController.OnDeath.RemoveListener(OnPlayerDied);
+
             Destroy(_playerController);
             Destroy(_playerHUD);
 
@@ -49,6 +62,13 @@ namespace GameMode.Modes
 
         public override void Tick()
         {
+            if (_freezeTimer)
+            {
+                return;
+            }
+
+            _levelTimer += Time.deltaTime;
+            _playerHUD.SetTimeElapsed(_levelTimer);
         }
 
         private void SpawnPlayer()
@@ -78,6 +98,20 @@ namespace GameMode.Modes
         private void OnPauseMenuHidden()
         {
             _playerHUD.gameObject.SetActive(true);
+        }
+
+        private void OnReachedLevelCompletion()
+        {
+            _freezeTimer = true;
+            LevelCompletedScreen.Instance.Show();
+            LevelCompletedScreen.Instance.SetTimer(_levelTimer);
+        }
+
+        private void OnPlayerDied()
+        {
+            _freezeTimer = true;
+            GameOverScreen.Instance.Show();
+            GameOverScreen.Instance.SetTimer(_levelTimer);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GameMode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Core
 {
@@ -37,6 +38,19 @@ namespace Core
         private void Update()
         {
             _gameModeManager.Tick();
+        }
+
+        public bool IsThereNextLevel(int current)
+        {
+            int sceneBuildIndex = SceneLoader.Instance.GameLevelsStartBuildIndex + current;
+
+            if (sceneBuildIndex < SceneLoader.Instance.GameLevelsStartBuildIndex)
+            {
+                Debug.LogError("Invalid level");
+                return false;
+            }
+
+            return sceneBuildIndex < SceneManager.sceneCountInBuildSettings - 1;
         }
 
         public void StartLevel(int levelIndex)
