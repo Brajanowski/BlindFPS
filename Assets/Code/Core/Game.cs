@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace Core
 {
-
-
     public class GameState
     {
         public int GameLevel;
+        public float LevelTimer;
     }
 
     public class Game : SingletonMonoBehaviour<Game>

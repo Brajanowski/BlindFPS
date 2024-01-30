@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Core;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace GameMode.Modes
 {
@@ -10,8 +9,7 @@ namespace GameMode.Modes
     {
         public override IEnumerator OnEnter()
         {
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
-            yield break;
+            yield return SceneLoader.Instance.LoadMainMenu();
         }
 
         public override IEnumerator OnExit()

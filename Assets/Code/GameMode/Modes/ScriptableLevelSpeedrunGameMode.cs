@@ -2,7 +2,6 @@
 using Core;
 using Player;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace GameMode.Modes
 {
@@ -12,34 +11,49 @@ namespace GameMode.Modes
         [SerializeField]
         private PlayerController _playerPrefab;
 
+        [SerializeField]
+        private PlayerHUD _playerHUDPrefab;
+
         private bool _initialize;
-        
+
         private GameState _gameState;
 
         private PlayerSpawn _playerSpawn;
         private PlayerController _playerController;
+        private PlayerHUD _playerHUD;
 
         public override IEnumerator OnEnter()
         {
             _gameState = Game.Instance.State;
-            
-            // first scene is main menu
-            int sceneIndex = _gameState.GameLevel + 1;
+            yield return SceneLoader.Instance.LoadLevel(_gameState.GameLevel);
 
-            if (sceneIndex < 1 || sceneIndex >= SceneManager.sceneCountInBuildSettings)
-            {
-                Debug.LogError("Invalid level index!");
-                yield break;
-            }
+            SpawnPlayer();
+            SpawnHUD();
+        }
 
-            SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
-            yield return null;
+        public override IEnumerator OnExit()
+        {
+            Destroy(_playerController);
+            Destroy(_playerHUD);
 
+            _gameState = null;
+            _playerSpawn = null;
+            _playerController = null;
+            _playerHUD = null;
+            yield break;
+        }
+
+        public override void Tick()
+        {
+        }
+
+        private void SpawnPlayer()
+        {
             _playerSpawn = FindObjectOfType<PlayerSpawn>();
             if (_playerSpawn == null)
             {
                 Debug.LogError("PlayerSpawn must be placed somewhere on level!");
-                yield break;
+                return;
             }
 
             PlayerSpawnLocation spawnLocation = _playerSpawn.GetSpawnLocation();
@@ -47,16 +61,9 @@ namespace GameMode.Modes
             _playerController.GetCameraController().SetLookDirection(spawnLocation.Rotation * Vector3.forward);
         }
 
-        public override IEnumerator OnExit()
+        private void SpawnHUD()
         {
-            _gameState = null;
-            _playerSpawn = null;
-            _playerController = null;
-            yield break;
-        }
-
-        public override void Tick()
-        {
+            _playerHUD = Instantiate(_playerHUDPrefab);
         }
     }
 }

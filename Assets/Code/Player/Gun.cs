@@ -24,11 +24,11 @@ namespace Player
         public UnityEvent OnShoot = new();
         public UnityEvent OnReadyToShoot = new();
 
-        public void Shoot(Vector3 origin, Vector3 direction)
+        public bool Shoot(Vector3 origin, Vector3 direction)
         {
             if (Time.time < _nextShootTime)
             {
-                return;
+                return false;
             }
 
             _nextShootTime = Time.time + 1.0f / _shootRate;
@@ -43,6 +43,7 @@ namespace Player
             _waiting = true;
 
             OnShoot?.Invoke();
+            return true;
         }
 
         private void Update()

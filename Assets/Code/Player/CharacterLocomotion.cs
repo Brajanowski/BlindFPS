@@ -71,6 +71,12 @@ namespace Player
 
         private void ConsumePendingInput()
         {
+            if (!IsGrounded)
+            {
+                _pendingInputValue = Vector3.zero;
+                return;
+            }
+            
             _pendingInputValue.y = 0.0f;
 
             float pendingInputMagnitude = _pendingInputValue.magnitude;
@@ -142,6 +148,11 @@ namespace Player
 
             _currentVelocity.x = movementVelocity.x;
             _currentVelocity.z = movementVelocity.z;
+        }
+
+        public void AddVelocity(Vector3 velocity)
+        {
+            _currentVelocity += velocity;
         }
 
         public void AddMovementInput(Vector3 input, float scale)

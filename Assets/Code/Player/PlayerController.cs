@@ -19,6 +19,9 @@ namespace Player
         [SerializeField]
         private float _environmentScanCooldown = 0.5f;
 
+        [SerializeField]
+        private float _gunKnockback = 15.0f;
+
         private GameControls _gameControls;
 
         private float _nextScanTime;
@@ -119,7 +122,11 @@ namespace Player
         
         private void OnFire(InputAction.CallbackContext ctx)
         {
-            _gun.Shoot(_firstPersonCamera.transform.position, _firstPersonCamera.Camera.transform.forward);
+            Vector3 shootDir = _firstPersonCamera.Camera.transform.forward;
+            if (_gun.Shoot(_firstPersonCamera.transform.position, shootDir))
+            {
+                _characterLocomotion.AddVelocity(shootDir * -_gunKnockback);
+            }
         }
         
         private void OnPauseMenuShow()

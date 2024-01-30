@@ -2,24 +2,17 @@
 
 namespace Core
 {
-    public class SystemsLoader : MonoBehaviour
+    public static class SystemsLoader
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Load()
         {
-            SystemsLoader systemsLoader = Resources.Load<SystemsLoader>("SystemsLoader");
-            DontDestroyOnLoad(Instantiate(systemsLoader));
-        }
-
-        [SerializeField]
-        private GameObject[] _prefabsToSpawn;
-
-        private void Awake()
-        {
-            foreach (GameObject prefab in _prefabsToSpawn)
+            GameObject[] systemsPrefabs = Resources.LoadAll<GameObject>("Systems/");
+            
+            foreach (GameObject systemPrefab in systemsPrefabs)
             {
-                GameObject go = Instantiate(prefab);
-                DontDestroyOnLoad(go);
+                GameObject go = Object.Instantiate(systemPrefab);
+                Object.DontDestroyOnLoad(go);
             }
         }
     }
