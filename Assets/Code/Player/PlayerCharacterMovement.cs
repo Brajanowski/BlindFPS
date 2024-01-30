@@ -54,11 +54,6 @@ namespace Player
         public UnityEvent OnJumpStarted = new();
         public UnityEvent OnLanded = new();
 
-        private void Awake()
-        {
-            Debug.Log("TA: " + MathfUtils.Remap(5, 0, 10, 0, 1));
-        }
-
         private void Update()
         {
             ConsumePendingInput();
