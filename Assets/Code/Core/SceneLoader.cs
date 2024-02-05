@@ -17,13 +17,15 @@ namespace Core
 
         public IEnumerator LoadMainMenu()
         {
-            yield return ScreenFade.Instance.FadeIn();
+            if (!SceneManager.GetSceneByBuildIndex(MainMenuSceneBuildIndex).isLoaded)
+            {
+                yield return ScreenFade.Instance.FadeIn();
+                yield return LoadTransitionScene();
+                yield return SceneManager.LoadSceneAsync(MainMenuSceneBuildIndex, LoadSceneMode.Single);
+                yield return ScreenFade.Instance.FadeOut();
 
-            yield return LoadTransitionScene();
-            yield return SceneManager.LoadSceneAsync(MainMenuSceneBuildIndex, LoadSceneMode.Single);
-            yield return ScreenFade.Instance.FadeOut();
-
-            UnloadTransitionScene();
+                UnloadTransitionScene();
+            }
         }
 
         public IEnumerator LoadLevel(int level)
