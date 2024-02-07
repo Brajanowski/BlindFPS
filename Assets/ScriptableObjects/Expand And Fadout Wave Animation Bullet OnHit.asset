@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f68a39e3e2844c29a85566580d6801ee, type: 3}
+  m_Name: Expand And Fadout Wave Animation Bullet OnHit
+  m_EditorClassIdentifier: 
+  _duration: 0.4
+  _startFadeOut: 0.3
+  _radius: 5
+  _animateInnerRadius: 0
